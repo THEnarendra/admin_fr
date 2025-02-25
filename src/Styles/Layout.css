@@ -1,0 +1,131 @@
+/* ===== General Styles ===== */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f6fa;
+  height: 100vh;
+  overflow: hidden; /* Prevents whole page scrolling */
+}
+
+/* ===== Layout Structure ===== */
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 210px;
+  background: #1d1d2c;
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 12px 20px;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sidebar-menu li a {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+}
+
+.sidebar-menu li a:hover{
+  color: gray;
+  scale: 1.02;
+}
+
+.sidebar-menu li .active {
+  padding: 10px;
+  background-color: #ff6b6b;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* ===== Topbar ===== */
+.topbar {
+  position: fixed;
+  width: calc(98% - 250px);
+  height: 60px;
+  top: 0;
+  left: 250px;
+  background: #444;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.topbar-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.search-box {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ===== Content & Scrollable Container ===== */
+.content {
+  margin-left: 250px; /* Space for fixed sidebar */
+  width: calc(100% - 250px);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex-grow: 1;
+  margin-top: 60px; /* Space for fixed topbar */
+  padding: 20px;
+  overflow-y: auto; /* Allows scrolling inside container */
+  height: calc(100vh - 60px);
+}
