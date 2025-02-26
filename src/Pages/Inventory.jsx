@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
 import { toast } from "react-hot-toast"; // Import toast notifications
 import { Navigate } from "react-router-dom";
+import api from "../api";
 
 const Inventory = () => {
   const { products, loading, error, refreshProducts } = useContext(ProductContext);
@@ -36,12 +37,14 @@ const Inventory = () => {
     try {
         const response = await axios.delete(`${api}/admin/product/${productId}`);
         console.log("Response from server:", response.data);
+  
 
         toast.success(response.data.message);
         refreshProducts(); // Refresh product list after deletion
     } catch (error) {
         toast.error("Failed to delete product");
         console.error("Error deleting product:", error.response?.data || error);
+        console.log(error)
     }
 };
 
@@ -55,8 +58,8 @@ const Inventory = () => {
     <div className="inventory">
       <div className="inventory-header">
         <h2>Inventory</h2>
-        <button className="edit-btn">
-          <Link to="/createListing">Create New Listing +</Link>
+        <button className="create-listing-btn">
+          <Link style={{ textDecoration: "none", color: "inherit" }} to="/createListing">Create New Listing +</Link>
         </button>
 
         <input
@@ -99,8 +102,7 @@ const Inventory = () => {
                   onClick={() => handleDelete(product._id)}
                   className="mx-4 delete-btn"
                 >
-                  Delete <span>{product._id}</span>
-                </button>
+                  Delete</button>
               </div>
             </div>
           ))

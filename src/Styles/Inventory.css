@@ -132,3 +132,7 @@
     cursor: not-allowed;
   }
   
+  .create-listing-btn{
+    border: 1px solid gray;
+    text-decoration: none;
+  }
