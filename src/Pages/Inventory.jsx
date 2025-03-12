@@ -93,7 +93,7 @@ const Inventory = () => {
               <div className="product-actions">
               <button 
               className="edit-btn" 
-              onClick={() => navigate(`/createListing/${product._id}`, { state: { product } })}
+              // onClick={() => navigate(`/createListing/${product._id}`, { state: { product } })}
               >
                 Edit
               </button>
