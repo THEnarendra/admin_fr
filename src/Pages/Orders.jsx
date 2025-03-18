@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Spinner, Alert, Card, Badge } from "react-bootstrap";
+import api from "../api";
 
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
@@ -11,11 +12,9 @@ const OrdersList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/v1/allOrders`);
+        const response = await axios.get(`${api}/allOrders`);
         setOrders(response.data.orders);
       } catch (err) {
-        setError("Failed to fetch orders.");
-        console.log("erro")
       } finally {
         setLoading(false);
       }
