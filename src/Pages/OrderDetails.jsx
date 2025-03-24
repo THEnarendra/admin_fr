@@ -33,8 +33,8 @@ const OrderDetails = () => {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        console.log(`Fetching: http://localhost:5000/api/v1/order/${id}`);
-        const response = await axios.get(`http://localhost:5000/api/v1/order/${id}`);
+        // console.log(`${api}/order/${id}`);
+        const response = await axios.get(`${api}/order/${id}`);
         console.log("Response:", response);
         if (response.data.success) {
           setOrder(response.data.order);
