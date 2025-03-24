@@ -12,6 +12,7 @@ import Collections from "./Pages/Collections";
 import ContextProvider from "./Context/ContextProvider"; // Import the single provider
 import "./Styles/Layout.css"; 
 import CreateListing from "./Pages/CreateListing";
+import OrderDetails from "./Pages/OrderDetails";
 
 const LayoutWrapper = ({ children }) => (
   <div className="layout">
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/" element={<LayoutWrapper><Home /></LayoutWrapper>} />
           <Route path="/dashboard" element={<LayoutWrapper><Dashboard /></LayoutWrapper>} />
           <Route path="/orders" element={<LayoutWrapper><Orders /></LayoutWrapper>} />
+          <Route path="/orders/:id" element={<LayoutWrapper><OrderDetails /></LayoutWrapper>} />
           <Route path="/collections" element={<LayoutWrapper><Collections /></LayoutWrapper>} />
           <Route path="/inventory" element={<LayoutWrapper><Inventory /></LayoutWrapper>} />
           <Route path="/createListing" element={<LayoutWrapper><CreateListing /></LayoutWrapper>} />
