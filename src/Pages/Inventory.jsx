@@ -9,15 +9,17 @@ import { Navigate } from "react-router-dom";
 import api from "../api";
 
 const Inventory = () => {
+  console.log("1")
   const { products, loading, error, refreshProducts } = useContext(ProductContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  console.log(products)
   const navigate =useNavigate();
 
   if (loading) return <Loader />;
-  if (error) return <p className="error">{error}</p>;
+  // if (error) return <p className="error">{error}</p>;
 
   // Filtering products based on search query
   const filteredProducts = products.filter((product) => {
