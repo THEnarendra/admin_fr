@@ -11,20 +11,40 @@ const CreateListing = () => {
   const [skuID, setSkuID] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
-  const [images, setImages] = useState([]);
   const [hasVariants, setHasVariants] = useState(false);
   const [variants, setVariants] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  // Amazon-style image upload state
+  const [imagePreviews, setImagePreviews] = useState([
+    { file: null, preview: null },
+    { file: null, preview: null },
+    { file: null, preview: null },
+    { file: null, preview: null },
+    { file: null, preview: null },
+  ]);
 
-  // Handle Image Upload
-  const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-    setImages([...images, ...files]);
+  // Handle individual image upload
+  const handleImageUpload = (index, event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const updatedPreviews = [...imagePreviews];
+    updatedPreviews[index] = {
+      file,
+      preview: URL.createObjectURL(file)
+    };
+    setImagePreviews(updatedPreviews);
+    
+    // Clear the file input value to allow re-uploading
+    event.target.value = null;
   };
 
-  // Remove Image
+  // Remove individual image
   const removeImage = (index) => {
-    setImages(images.filter((_, i) => i !== index));
+    const updatedPreviews = [...imagePreviews];
+    updatedPreviews[index] = { file: null, preview: null };
+    setImagePreviews(updatedPreviews);
   };
 
   // Add a New Variant
@@ -93,12 +113,16 @@ const CreateListing = () => {
       formData.append("variants", JSON.stringify(variants));
     }
 
-    images.forEach((image) => {
-      formData.append("images", image);
+    // Add only the uploaded images to formData
+    imagePreviews.forEach((image) => {
+      if (image.file) {
+        formData.append("images", image.file);
+      }
     });
 
     try {
       const response = await axios.post(
+        // `http://localhost:5000/api/v1/admin/addProduct`, 
         `${api}/admin/addProduct`,
         formData,
         {
@@ -129,7 +153,13 @@ const CreateListing = () => {
     setSkuID("");
     setPrice("");
     setStock("");
-    setImages([]);
+    setImagePreviews([
+      { file: null, preview: null },
+      { file: null, preview: null },
+      { file: null, preview: null },
+      { file: null, preview: null },
+      { file: null, preview: null },
+    ]);
     setHasVariants(false);
     setVariants([]);
   };
@@ -151,15 +181,40 @@ const CreateListing = () => {
           </>
         )}
 
-        <label>Upload Images:</label>
-        <input type="file" multiple onChange={handleImageUpload} />
-        <div className="image-preview-container">
-          {images.map((img, index) => (
-            <div key={index} className="image-preview">
-              <img src={URL.createObjectURL(img)} alt={`Preview ${index}`} />
-              <button type="button" onClick={() => removeImage(index)}>X</button>
-            </div>
-          ))}
+        {/* Amazon-style image upload section */}
+        <div className="image-upload-section">
+          <h3>Product Images</h3>
+          <p>Upload up to 5 images (First image will be the main display)</p>
+          
+          <div className="image-upload-grid">
+            {imagePreviews.map((image, index) => (
+              <div key={index} className="image-upload-box">
+                {image.preview ? (
+                  <div className="image-preview-container">
+                    <img src={image.preview} alt={`Preview ${index}`} />
+                    <button 
+                      type="button" 
+                      className="remove-image-btn"
+                      onClick={() => removeImage(index)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ) : (
+                  <label className="upload-placeholder">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(index, e)}
+                      style={{ display: 'none' }}
+                    />
+                    <span>+</span>
+                    <p>Upload Image {index + 1}</p>
+                  </label>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         <label>
